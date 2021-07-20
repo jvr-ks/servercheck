@@ -42,7 +42,7 @@ bitName := (bit="64" ? "" : bit)
 appName := "Servercheck"
 appname := "servercheck"
 extension := ".exe"
-appVersion := "0.006"
+appVersion := "0.007"
 app := appName . " " . appVersion . " " . bit . "-bit"
 
 ;iniFile := wrkDir . "servercheck.ini"
