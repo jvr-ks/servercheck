@@ -52,10 +52,10 @@ Copyright (c) 2021 J. v. Roos
 
 <a name="virusscan"></a>
 ##### Virusscan at Virustotal 
-[Virusscan at Virustotal, servercheck.exe 64bit-exe, Check here](https://www.virustotal.com/gui/url/d4d8370a677d01200dd393581b90b2f4c5148f1f51b688348fe7040c378c4e05/detection/u-d4d8370a677d01200dd393581b90b2f4c5148f1f51b688348fe7040c378c4e05-1626781928
+[Virusscan at Virustotal, servercheck.exe 64bit-exe, Check here](https://www.virustotal.com/gui/url/d4d8370a677d01200dd393581b90b2f4c5148f1f51b688348fe7040c378c4e05/detection/u-d4d8370a677d01200dd393581b90b2f4c5148f1f51b688348fe7040c378c4e05-1626784243
 )  
-[Virusscan at Virustotal, servercheck32.exe 32bit-exe, Check here](https://www.virustotal.com/gui/url/86195c6fb37ecdc86aaaf1ff0b51851164df2d2c7bf5e47c124b53cf19ef64c4/detection/u-86195c6fb37ecdc86aaaf1ff0b51851164df2d2c7bf5e47c124b53cf19ef64c4-1626781929
+[Virusscan at Virustotal, servercheck32.exe 32bit-exe, Check here](https://www.virustotal.com/gui/url/86195c6fb37ecdc86aaaf1ff0b51851164df2d2c7bf5e47c124b53cf19ef64c4/detection/u-86195c6fb37ecdc86aaaf1ff0b51851164df2d2c7bf5e47c124b53cf19ef64c4-1626784244
 )  
-[Virusscan at Virustotal, servercheckA32.exe 32bit-exe ANSI, Check here](https://www.virustotal.com/gui/url/632056680957da3ad58cd37426174af123b1fd5926d5f4d2d1e707c80f8e0750/detection/u-632056680957da3ad58cd37426174af123b1fd5926d5f4d2d1e707c80f8e0750-1626781930
+[Virusscan at Virustotal, servercheckA32.exe 32bit-exe ANSI, Check here](https://www.virustotal.com/gui/url/632056680957da3ad58cd37426174af123b1fd5926d5f4d2d1e707c80f8e0750/detection/u-632056680957da3ad58cd37426174af123b1fd5926d5f4d2d1e707c80f8e0750-1626784246
 )  
 Use [CTRL] + Click to open in a new window! 

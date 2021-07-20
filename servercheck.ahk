@@ -40,21 +40,21 @@ if (!A_IsUnicode)
 bitName := (bit="64" ? "" : bit)
 
 appName := "Servercheck"
-appname := "servercheck"
+appnameLower := "servercheck"
 extension := ".exe"
-appVersion := "0.007"
+appVersion := "0.008"
 app := appName . " " . appVersion . " " . bit . "-bit"
 
 ;iniFile := wrkDir . "servercheck.ini"
 urlsFile := wrkDir . "servercheck.txt"
 
-server := "https://github.com/jvr-ks/" . appname . "/raw/master/"
+server := "https://github.com/jvr-ks/" . appnameLower . "/raw/master/"
 
-downLoadURL := server . appname . bitName . extension
+downLoadURL := server . appnameLower . bitName . extension
 
-exeFilename := appname . bitName . extension
+exeFilename := appnameLower . bitName . extension
 
-downLoadFilename := appname . ".exe.tmp"
+downLoadFilename := appnameLower . ".exe.tmp"
 
 restartFilename := "restart.bat"
 
@@ -136,8 +136,6 @@ LVCommands(){
 readServerUrls(){
 	global urlsFile
 	global urlsArr
-	global param
-	global paramMaxCount
 
 	urlsArr := []
 
@@ -167,10 +165,10 @@ showMessageServercheck(hk1, hk2){
 restartApp(){
 	global bit
 	global bitName
-	global appname
+	global appnameLower
 	global restartFilename
 	
-	msgbox, A restart of %appname%%bitName% is required!
+	msgbox, A restart of %appnameLower%%bitName% is required!
 	run,%comspec% /k %restartFilename% %bit%
 	
 	exit()
@@ -179,21 +177,19 @@ restartApp(){
 restartAppNoupdate(){
 	global bit
 	global bitName
-	global appname
+	global appnameLower
 	global restartFilename
 	
-	msgbox, A restart of %appname%%bitName% is required!
+	msgbox, A restart of %appnameLower%%bitName% is required!
 	run,%comspec% /k %restartFilename% %bit% noupdate
 	
 	exit()
 }
 ;--------------------------------- updateApp ---------------------------------
 updateApp(){
+	global appName
+	global bitName
 	global appVersion
-	global msgDefault
-	global downLoadURL
-	global exeFilename
-	global bit
 	global downLoadFilename
 	global restartFilename
 	global downLoadURL
@@ -205,8 +201,6 @@ updateApp(){
 			msg := "This is: " . appVersion . ", available on Github is: " . vers . " update now?"
 			MsgBox , 1, Update available!, %msg%
 			
-			FileDelete, %downLoadFilename%
-			
 			IfMsgBox, OK
 				{
 					;restartXX.bat can contain update hints, allways download!
@@ -217,6 +211,7 @@ updateApp(){
 					UrlDownloadToFile, %downLoadURL%, %downLoadFilename%
 							
 					if FileExist(downLoadFilename){
+						showHint(appName . bitName . " restarts now!",4000)
 						restartApp()
 						exitApp
 					} else {
@@ -331,16 +326,58 @@ editUrlsFile() {
 	f := "notepad.exe" . " " . urlsFile
 	showMessageServercheck("", "Please close the editor to refresh the menu!")
 	runWait %f%,,max
-
-	;readServerUrls()
+	showMessageServercheck("", "")
 	
-	restartAppNoupdate()
+	refreshGui()
+}
+;-------------------------------- refreshGui --------------------------------
+refreshGui(){
+	global urlsArr
+	global selectedServer
+
+	urlsArr := []
+	selectedServer := ""
+
+	readServerUrls()
+
+	LV_Delete()
+	
+	for index, url in urlsArr
+	{
+		row := LV_Add("",index,url)
+	}
+	
+	return
 }
 ;------------------------------------ eq ------------------------------------
 eq(a, b) {
 	if (InStr(a, b) && InStr(b, a))
 		return 1
 	return 0
+}
+;--------------------------------- showHint ---------------------------------
+showHint(s, n){
+	global hinttimer
+	global font
+	global fontsize
+	
+	Gui, hint:Font, %fontsize%, %font%
+	Gui, hint:Add, Text,, %s%
+	Gui, hint:-Caption
+	Gui, hint:+ToolWindow
+	Gui, hint:+AlwaysOnTop
+	Gui, hint:Show
+	t := -1 * n
+	setTimer,showHintDestroy, %t%
+	return
+}
+;------------------------------ showHintDestroy ------------------------------
+showHintDestroy(){
+	global hinttimer
+
+	setTimer,showHintDestroy, delete
+	Gui, hint:Destroy
+	return
 }
 ;----------------------------------- exit -----------------------------------
 exit(){
