@@ -2,8 +2,9 @@ www.herkulesbuben.de
 herkulesbuben.de
 www.jvr.de
 jvr.de
-www.simped.de
-simped.de
+www.simped.de [a test server]
+pma.simped.de [unhidden] [phpMyAdmin]
+simped.de [unhidden][autoclose]
 naturamedica.de
 google.com
 www.dskv.de

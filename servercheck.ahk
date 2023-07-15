@@ -39,7 +39,7 @@ bitName := (bit="64" ? "" : bit)
 appName := "Servercheck"
 appnameLower := "servercheck"
 extension := ".exe"
-appVersion := "0.015"
+appVersion := "0.016"
 app := appName . " " . appVersion . " " . bit . "-bit"
 
 urlsFile := wrkDir . "servercheck.txt"
@@ -111,6 +111,12 @@ mainWindow() {
   
   return
 }
+;------------------------------ guiMainGuiClose ------------------------------
+guiMainGuiClose(){
+  exit()
+
+  return
+}
 ;-------------------------------- LVCommands --------------------------------
 LVCommands(){
   global selectedServer
@@ -138,7 +144,6 @@ readServerUrls(){
   
   return
 }
-
 ;-------------------------------- showStatus --------------------------------
 showStatus(s){
 
@@ -147,56 +152,6 @@ showStatus(s){
 
   memory := "[" . GetProcessMemoryUsage(DllCall("GetCurrentProcessId")) . " MB]      "
   SB_SetText("`t`t" . memory , 2, 2)
-
-  return
-}
-;----------------------------------- ping -----------------------------------
-ping(){
-  global selectedServer
-  global Text1
-  
-  if (selectedServer != ""){
-    GuiControl,guiMain:,Text1,Ping started (result is copied to the clipboard too) ...
-    Runwait %comspec% /c ping %selectedServer% | clip,,hide
-    s := clipboard
-    GuiControl,guiMain:,Text1,%s%
-    showstatus("Result is copied to the clipboard!")
-  } else {
-    msgbox, Select a server first!
-  }
-
-  return
-}
-;-------------------------------- traceroute --------------------------------
-traceroute(){
-  global selectedServer
-  global Text1
-  
-  if (selectedServer != ""){
-    GuiControl,guiMain:,Text1,Traceroute started, takes some time to finish`n(result is copied to the clipboard too) ...
-    Runwait %comspec% /c tracert %selectedServer% | clip,,hide
-    s := clipboard
-    GuiControl,guiMain:,Text1,%s%
-    showstatus("Result is copied to the clipboard!")
-  } else {
-    msgbox, Select a server first!
-  }
-
-  return
-}
-;--------------------------------- NSLookup ---------------------------------
-NSLookup() {
-  global selectedServer
-  global Text1
-  
-  if (selectedServer != ""){
-    Runwait %comspec% /c NSLookup.exe %selectedServer% | clip,,hide
-    s := clipboard
-    GuiControl,guiMain:,Text1,%s%
-    showstatus("Result is copied to the clipboard!")
-  } else {
-    msgbox, Select a server first!
-  }
 
   return
 }
@@ -360,22 +315,125 @@ showHintDestroy(){
   Gui, hint:Destroy
   return
 }
-;------------------------------ guiMainGuiClose ------------------------------
-guiMainGuiClose(){
-  exit()
+;-------------------------------- runCommand --------------------------------
+runCommand(selectedCommand){
+  global selectedServer
+
+  foundUnhidden := RegExMatch(selectedServer,"Oi)(\[unhidden])", match, 1)
+  foundAutoclose := RegExMatch(selectedServer,"Oi)(\[autoclose])", match, 1)
+  
+  selectedServer := modifyServer(selectedServer)
+  
+  GuiControl,guiMain:,Text1,
+    
+
+  GuiControl,guiMain:,Text1,Executing may take a while`,`n`nplease be patient ...
+  showstatus("Run command: " . selectedCommand . " " . selectedServer)
+  
+  consoleModifier := "/k"
+  if (foundAutoclose)
+    consoleModifier := "/c"
+  
+  result := ""
+  if (foundUnhidden){
+    GuiControl,guiMain:,Text1,Using a console window!
+    runwait, %comspec% %consoleModifier% %selectedCommand% %selectedServer%
+    GuiControl,guiMain:,Text1,
+  } else {
+    runwait, %comspec% /c %selectedCommand% %selectedServer% | clip,,hide
+    result := clipboard
+    GuiControl,guiMain:,Text1,%result%
+    showstatus("Result is copied to the clipboard!")
+  }
 
   return
 }
-;----------------------------------- exit -----------------------------------
-exit(){
-  ExitApp
+;------------------------------- modifyCommand -------------------------------
+modifyServer(s){
+
+  locale := getLocale()
+
+  s := StrReplace(s, "[locale]", locale)
+
+  s := RegExReplace(s, "\[.*?]", "")
+  
+  return s
 }
-;----------------------------------------------------------------------------
+;--------------------------------- getLocale ---------------------------------
 getLocale() {
   RegRead, theLocale, HKEY_CURRENT_USER\Control Panel\International, LocaleName
   
   return theLocale
 }
+;----------------------------------- ping -----------------------------------
+ping(){
+  runCommand("ping")
+  return
+}
+;-------------------------------- traceroute --------------------------------
+traceroute(){
+  runCommand("tracert")
+  return
+}
+;--------------------------------- NSLookup ---------------------------------
+NSLookup() {
+  runCommand("NSLookup.exe")
+  return
+}
 
-a := getLocale()
-MsgBox, %a%
+
+; ping(){
+  ; global selectedServer
+  ; global Text1
+  
+  ; if (selectedServer != ""){
+    ; GuiControl,guiMain:,Text1,Ping started (result is copied to the clipboard too) ...
+    ; Runwait %comspec% /c ping %selectedServer% | clip,,hide
+    ; s := clipboard
+    ; GuiControl,guiMain:,Text1,%s%
+    ; showstatus("Result is copied to the clipboard!")
+  ; } else {
+    ; msgbox, Select a server first!
+  ; }
+
+  ; return
+; }
+;-------------------------------- traceroute --------------------------------
+
+; traceroute(){
+  ; global selectedServer
+  ; global Text1
+  
+  ; if (selectedServer != ""){
+    ; GuiControl,guiMain:,Text1,Traceroute started, takes some time to finish`n(result is copied to the clipboard too) ...
+    ; Runwait %comspec% /c tracert %selectedServer% | clip,,hide
+    ; s := clipboard
+    ; GuiControl,guiMain:,Text1,%s%
+    ; showstatus("Result is copied to the clipboard!")
+  ; } else {
+    ; msgbox, Select a server first!
+  ; }
+
+  ; return
+; }
+;--------------------------------- NSLookup ---------------------------------
+; NSLookup() {
+  ; global selectedServer
+  ; global Text1
+  
+  ; if (selectedServer != ""){
+    ; Runwait %comspec% /c NSLookup.exe %selectedServer% | clip,,hide
+    ; s := clipboard
+    ; GuiControl,guiMain:,Text1,%s%
+    ; showstatus("Result is copied to the clipboard!")
+  ; } else {
+    ; msgbox, Select a server first!
+  ; }
+
+  ; return
+; }
+
+;----------------------------------- exit -----------------------------------
+exit(){
+  ExitApp
+}

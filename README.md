@@ -28,7 +28,18 @@ or
 
 **Be shure to use only one of the \*.exe at a time!**  
   
+#### Modifiers  
+Placed after the servername.  
   
+Modifier | Description  
+------------ | -------------  
+\[unhidden] | use an unhidden console window  
+\[autoclose] | closes the console window after running the command (in conjunction with \[unhidden])
+\[locale] | replace "[locale]" with the language code, like "en_US"  
+\[all other text] | undefined modifier are treated as a comment
+
+Modifiers are not case-sensitive. 
+
 #### Sourcecode: [Autohotkey format](https://www.autohotkey.com)  
 * "servercheck.ahk"  
  
@@ -58,7 +69,7 @@ Copyright (c) 2021 J. v. Roos
 
 <a name="virusscan"></a>
 ##### Virusscan at Virustotal 
-[Virusscan at Virustotal, servercheck.exe 64bit-exe, Check here](https://www.virustotal.com/gui/url/ec5d9043ddd5483bbd8d96b198dbf5b51729ed9ac0ab2c0e80b558c9a5603390/detection/u-ec5d9043ddd5483bbd8d96b198dbf5b51729ed9ac0ab2c0e80b558c9a5603390-1689157941
+[Virusscan at Virustotal, servercheck.exe 64bit-exe, Check here](https://www.virustotal.com/gui/url/ec5d9043ddd5483bbd8d96b198dbf5b51729ed9ac0ab2c0e80b558c9a5603390/detection/u-ec5d9043ddd5483bbd8d96b198dbf5b51729ed9ac0ab2c0e80b558c9a5603390-1689414758
 )  
-[Virusscan at Virustotal, servercheck32.exe 32bit-exe, Check here](https://www.virustotal.com/gui/url/62e61f85ee8e4e784fe91f244587ece12339144451a421428f628738f8fcc30b/detection/u-62e61f85ee8e4e784fe91f244587ece12339144451a421428f628738f8fcc30b-1689157942
+[Virusscan at Virustotal, servercheck32.exe 32bit-exe, Check here](https://www.virustotal.com/gui/url/62e61f85ee8e4e784fe91f244587ece12339144451a421428f628738f8fcc30b/detection/u-62e61f85ee8e4e784fe91f244587ece12339144451a421428f628738f8fcc30b-1689414759
 )  
