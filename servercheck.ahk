@@ -381,58 +381,6 @@ NSLookup() {
   return
 }
 
-
-; ping(){
-  ; global selectedServer
-  ; global Text1
-  
-  ; if (selectedServer != ""){
-    ; GuiControl,guiMain:,Text1,Ping started (result is copied to the clipboard too) ...
-    ; Runwait %comspec% /c ping %selectedServer% | clip,,hide
-    ; s := clipboard
-    ; GuiControl,guiMain:,Text1,%s%
-    ; showstatus("Result is copied to the clipboard!")
-  ; } else {
-    ; msgbox, Select a server first!
-  ; }
-
-  ; return
-; }
-;-------------------------------- traceroute --------------------------------
-
-; traceroute(){
-  ; global selectedServer
-  ; global Text1
-  
-  ; if (selectedServer != ""){
-    ; GuiControl,guiMain:,Text1,Traceroute started, takes some time to finish`n(result is copied to the clipboard too) ...
-    ; Runwait %comspec% /c tracert %selectedServer% | clip,,hide
-    ; s := clipboard
-    ; GuiControl,guiMain:,Text1,%s%
-    ; showstatus("Result is copied to the clipboard!")
-  ; } else {
-    ; msgbox, Select a server first!
-  ; }
-
-  ; return
-; }
-;--------------------------------- NSLookup ---------------------------------
-; NSLookup() {
-  ; global selectedServer
-  ; global Text1
-  
-  ; if (selectedServer != ""){
-    ; Runwait %comspec% /c NSLookup.exe %selectedServer% | clip,,hide
-    ; s := clipboard
-    ; GuiControl,guiMain:,Text1,%s%
-    ; showstatus("Result is copied to the clipboard!")
-  ; } else {
-    ; msgbox, Select a server first!
-  ; }
-
-  ; return
-; }
-
 ;----------------------------------- exit -----------------------------------
 exit(){
   ExitApp
